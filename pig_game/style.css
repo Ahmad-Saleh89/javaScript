@@ -26,10 +26,26 @@ body {
     color: #555;
 }
 
+.intro{
+    width: 1000px;
+    margin: 30px auto;
+    background-color: #f7f7f7;
+    padding: 20px 30px;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+.intro h1{
+    color: #EB4D4D;
+    padding-bottom: 20px;
+}
+.intro ul{
+    padding-left: 30px;
+}
+
 .wrapper {
     width: 1000px;
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
