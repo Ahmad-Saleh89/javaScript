@@ -168,3 +168,24 @@ i {
 
 .winner { background-color: #f7f7f7; }
 .winner .player-name { font-weight: 300; color: #EB4D4D; }
+
+
+/* User Input */
+#user_input{
+    position: absolute;
+    bottom: 15px;
+    height: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#user_input label{
+    margin-right: 20px;
+}
+#user_input input{
+    width: 50px;
+    border: 1px solid #EB4D4D;
+    height: 25px;
+    padding-left: 5px;
+}
