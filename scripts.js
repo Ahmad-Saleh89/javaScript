@@ -28,3 +28,23 @@ mark.calculateAge();
 
 
 // Object.create
+var personProto = {
+  calculateAge: function(){
+    console.log(2018 - this.yearOfBirth);
+  }
+};
+
+// First way to do it:
+var ahmad = Object.create(personProto);
+ahmad.name = 'Ahmad';
+ahmad.yearOfBirth = 1989;
+ahmad.job = 'developer';
+ahmad.calculateAge();
+
+// Another way to do it:
+var maher = Object.create(personProto, 
+  {
+    name: { value: 'Maher' },
+    yearOfBirth: { value: 1990 },
+    job: { value: 'programmer' }
+  });
