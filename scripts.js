@@ -48,3 +48,41 @@ var maher = Object.create(personProto,
     yearOfBirth: { value: 1990 },
     job: { value: 'programmer' }
   });
+
+  // Primitives vs objects
+  // 1- Primitives:
+  var a = 23;
+  var b = a;
+  a = 44;
+  console.log(a);
+  console.log(b);
+
+  // 2- objects
+  var obj1 = {
+    name: 'John',
+    age: 29
+  };
+  var obj2 = obj1;
+  obj1.age = 33;
+  console.log(obj1.age);
+  console.log(obj2.age);
+  /* obj2 is not a new independent object, (No Copy is created here), However, 
+    obj2 creates a new reference points to the same object in memory
+  */
+
+  // Functions
+  var age = 29;
+  var obj = {
+    name: 'Ahmad',
+    city: 'Lincoln'
+  };
+  function change(a, b){
+    a = 32;
+    b.city = 'Damascus';
+  }
+  change(age, obj);
+  console.log(age);
+  console.log(obj.city);
+  /* when a primitive is passed into a function: it won't 
+  affect the original one. However, when we pass an object, 
+  it will affect the original */
