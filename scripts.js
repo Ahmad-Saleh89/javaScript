@@ -86,3 +86,42 @@ var maher = Object.create(personProto,
   /* when a primitive is passed into a function: it won't 
   affect the original one. However, when we pass an object, 
   it will affect the original */
+
+
+  // ///////////////////////
+  // Passing functions as arguments: 
+
+  var years = [1990, 1988, 2000, 1999, 2004];
+  /* arrayCalc is a generic function that will accept an array as
+  a first argument as well as another 
+  function (callback functions) as a second argument */
+  function arrayCalc(arr, func){
+    var arrResult = [];
+    for (var i = 0; i < arr.length; i++){
+      arrResult.push(func(arr[i]));
+    }
+    return arrResult;
+  }
+  
+// (callback functions)
+  function calcAge(val){
+    return 2018 - val;
+  }
+  var ages = arrayCalc(years, calcAge);
+  console.log(ages);
+
+  function isAdult(val){
+    return val >= 18;
+  }
+  var adults = arrayCalc(ages, isAdult);
+  console.log(adults);
+
+  function maxHeartRate(val){
+    if(val >= 18 && val <= 81){
+      return Math.round(206.9 - (0.67 * val));
+    }else{
+      return -1;
+    }
+  }
+  var rates = arrayCalc(ages, maxHeartRate);
+  console.log(rates);
