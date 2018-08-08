@@ -89,7 +89,7 @@ var maher = Object.create(personProto,
 
 
   // ///////////////////////
-  // Passing functions as arguments: 
+  // First calss functions: Passing functions as arguments: 
 
   var years = [1990, 1988, 2000, 1999, 2004];
   /* arrayCalc is a generic function that will accept an array as
@@ -125,3 +125,36 @@ var maher = Object.create(personProto,
   }
   var rates = arrayCalc(ages, maxHeartRate);
   console.log(rates);
+
+
+  // /////////////
+  // First class functions: Functions returning functions
+  function interviewQuestion(job){
+    if(job === 'designer'){
+      return function(name){
+        console.log(name + ', can you please explain what UX design is?');
+      }
+    }else if (job === 'teacher'){
+      return function(name){
+        console.log('What class do you teach, ' + name + '?');
+      }
+    }else{
+      return function(name){
+        console.log('Hello ' + name + ', What do you do?');
+      }
+    }
+  }
+
+  var teacherQuestion = interviewQuestion('teacher');
+  teacherQuestion('Ahmad');
+  var designerQuestion = interviewQuestion('designer');
+  designerQuestion('John');
+  designerQuestion('Noha');
+  var randomQuestion = interviewQuestion('Pharmacist');
+  randomQuestion('Heba');
+
+  /* We can also do it this way: 
+  First: the interviewQuestion function gets called,
+  then it returns a function and the second function gets
+  the second arrgument */
+  interviewQuestion('teacher')('Mark');
