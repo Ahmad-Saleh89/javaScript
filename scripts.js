@@ -1,11 +1,17 @@
-// Function Constructor
-
+var ageee = 23;
+function foo(){
+  console.log(ageee);
+  var ageee = 33;
+}
+foo();
+// Object Literal
 var john = {
   name: 'John',
   yearOfBirth: 1989,
   job: 'teacher'
 };
 
+// Function Constructor
 var Person = function(name, yearOfBirth, job){
   this.name = name;
   this.yearOfBirth = yearOfBirth;
@@ -158,3 +164,33 @@ var maher = Object.create(personProto,
   then it returns a function and the second function gets
   the second arrgument */
   interviewQuestion('teacher')('Mark');
+
+  // //////////////
+  // IIFE: Immediately Invoked Function Expression
+  /* JS function that runs as soon as it is defined
+    * This prevents accessing variables withen the IIFE scope
+    * It also prevents polluting the global scope.
+  */
+  (function (){ // <--- Anonymous function
+    var counter = 10;
+    counter++;
+    console.log('IFFE counter = ' + counter);
+  })(); // <-- () --> invokes the function immediately
+
+// Now notice that the previous IFFE function will not affect the next function
+  function someFunc(){
+    var counter = 2;
+    counter++;
+    console.log(counter);
+  }
+  someFunc();
+
+/* Assigning the IFFE to a variable stores the function's result, 
+  not the function itself */
+  var result = (function(){
+    var name = "Barry";
+    return name;
+  })();
+  console.log(result);
+
+
