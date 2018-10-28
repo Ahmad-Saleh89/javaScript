@@ -194,3 +194,40 @@ var maher = Object.create(personProto,
   console.log(result);
 
 
+///////////////
+/// Closures
+/* 
+  An inner function has always access to the variables and parameters 
+  of its outer funtion, even after the outer function has returned.
+*/
+
+function retirement(retirementAge){ // <--- Outer function
+  var a = ' years left until retirement.';
+  return function(yearOfBirth){ // <-- inner function
+    var age = 2018 - yearOfBirth;
+    console.log((retirementAge - age) + a);
+  }
+}
+
+var retirementUS = retirement(66);
+retirementUS(1990);
+
+var retirementSAR = retirement(60);
+retirementSAR(1980);
+
+
+// Another example for closure
+function interview(job){
+  return function(name){
+    if(job === 'designer'){
+      console.log(name + ', can you please explain what UX design is?');
+    }else if(job === 'teacher'){
+      console.log(name + ', What subject do you teach?');
+    }else{
+      console.log('Hello ' + name + ', what do you do?');
+    }
+  }
+}
+
+interview('teacher')('John');
+interview('designer')('Ahmad');
