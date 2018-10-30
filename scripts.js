@@ -231,3 +231,41 @@ function interview(job){
 
 interview('teacher')('John');
 interview('designer')('Ahmad');
+
+// Quiz question test
+(function(){ // <--- IIFE
+  
+function Quiz(question, answers, correct){
+  this.question = question;
+  this.answers = answers;
+  this.correct = correct;
+}
+Quiz.prototype.displayQuestion = function(){
+  console.log(this.question);
+  for(var i = 0; i<this.answers.length; i++){
+    console.log(i + ': ' + this.answers[i]);
+  }
+}
+
+Quiz.prototype.checkAnswer = function(answer){
+  if(answer === this.correct){
+    console.log('Correct Answer');
+  }else{
+    console.log('Wrong Answer');
+  }
+}
+
+var q1 = new Quiz('Is javascript the coolest programming language in the world?', ['Yes', 'No'], 0);
+
+var q2 = new Quiz('What is the name of this course\'s teacher?', ['Ahmad','Jonas','Maher'], 1);
+
+var q3 = new Quiz('What does best describe codig?', ['Boring', 'difficult', 'fun'], 2);
+
+var questions = [q1, q2, q3];
+var n = Math.floor(Math.random() * questions.length);
+
+questions[n].displayQuestion();
+
+var answer = parseInt(prompt('Please select the correct answer.'));
+questions[n].checkAnswer(answer);
+})();
