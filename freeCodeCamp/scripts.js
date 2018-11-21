@@ -3,6 +3,19 @@ function convertToInt(str){
 }
 convertToInt("56");
 
+for (var x = 0; x < 3; x++) {
+  console.log(x); 
+}
+console.log("x will take the updated global value:", x);
+/* Inside the for loop, x only reaches number 2, however, since we are
+using (var) --> it gets updated globaly and reaches number 3 */
+
+for (let k = 0; k < 3; k++){
+  console.log(k)
+}
+/* Here you cannot use k outside it is scope 
+because with (let) k is only local */
+
 var printNumTwo;
 for (var i = 0; i < 3; i++){
   if(i === 2){
@@ -12,6 +25,8 @@ for (var i = 0; i < 3; i++){
   }
 }
 console.log(printNumTwo());
+/* Here it won't print 2, it will print 3 for the same reason I 
+explained above..... it will print 2 however if let is used instead */
 
 // Square only positive integers --- First way
 const realNumberArray = [4, 5.6, -9.8, 3.14, 42, 6, 8.34, -2];
@@ -53,6 +68,7 @@ const sum = (() => {
 })();
 console.log(sum(1,2,3));
 
+//////// *********************** /////////
 // Understanding reduce() method
   let numbers = [5,23,33,2];
   function getSum(accumulator, num){
@@ -97,3 +113,17 @@ console.log(maxNum);
 var maxNum = numbers.reduce((accumulator, val) => val > accumulator ? val : accumulator);
 console.log(maxNum);
 /* This line means: if (b > a) return b ,,, if not return a */
+
+
+
+function checkScope() {
+  "use strict";
+    let i = "Hello";
+    if (true) {
+     let i = "Hi";
+      console.log("i is:", i , "Block Scope");
+    }
+    console.log("i is:", i , "Function Scope");
+    return i;
+  }
+  checkScope();
