@@ -1,3 +1,5 @@
+/* **** Introduction to ES6 ********* */
+
 function convertToInt(str){
   console.log(parseInt(str));
 }
@@ -56,6 +58,15 @@ const squared = (arr) => {
 }
 const squaredNumbers = squared(realNumbers);
 console.log(squaredNumbers);
+
+// Default parameter in ES6
+const increment = (function(){
+  return function increment(num, val = 1){
+    return num + val;
+  }
+})();
+console.log(increment(99,6));
+console.log(increment(99));
 
 // The rest operator: ES6
 /* With the rest operator you can create functions that take a
@@ -127,3 +138,11 @@ function checkScope() {
     return i;
   }
   checkScope();
+
+  //  The Spread Operator (for arrays)
+  const arr1 = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
+  let arr2;
+  (function(){
+    arr2 = [...arr1];
+  })();
+  console.log(arr2);
