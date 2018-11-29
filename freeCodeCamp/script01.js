@@ -47,3 +47,21 @@ let unResult = anyStr.match(unReg);
 let funResult = unReg.test(anyStr);
 console.log(funResult);
 console.log(unResult);
+
+// Match single character with multiple possibilities
+let quoteSample = "Beware of bugs in the above code; I have only proved it correct, not tried it.";
+let vowelReg = /[aeiou]/gi;
+let vowelResult = quoteSample.match(vowelReg);
+console.log(vowelResult);
+
+// Match letters of the alphabet
+let quoteStr = "The quick brown fox jumps over the lazy dog";
+let alphabetReg = /[a-k]/gi;
+let alphaResult = quoteStr.match(alphabetReg);
+console.log(alphaResult);
+
+// Match Range of numbers and letters
+let mixedStr = "Blueberry 3.44 are 99 delicious";
+let mixedReg = /[h-s2-6]/ig;
+let mixedResult = mixedStr.match(mixedReg);
+console.log(mixedResult);
