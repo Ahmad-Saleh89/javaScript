@@ -203,6 +203,7 @@ let users = {
 }
 
 function isEveryonehere(objArray, obj){
+  // First way to solve it
   // for(let i = 0; i < objArray.length; i++){
   //   if(obj.hasOwnProperty(objArray[i]) === false){
   //     console.log('Sorry but ' + objArray[i] + ' is not among the users!');
@@ -241,5 +242,39 @@ for(let user in obj){
 }
  return count;
 }
-
 console.log(countOnline(users));
+
+// Generate an Array of all Object keys with Object.keys()
+function getArrayOfUsers(obj){
+  console.log(Object.keys(obj));
+  return Object.keys(obj);
+}
+getArrayOfUsers(users);
+
+// Modify an Array Stored in an Object
+let user = {
+  name: 'Kenneth',
+  age: 28,
+  data: {
+    username: 'kennethCodesAllDay',
+    joinDate: 'March 26, 2016',
+    organization: 'freeCodeCamp',
+    friends: [
+      'Sam',
+      'Kira',
+      'Tomo'
+    ],
+    location: {
+      city: 'San Francisco',
+      state: 'CA',
+      country: 'USA'
+    }
+  }
+};
+
+function addFriend(userObj, friend){
+  userObj.data.friends.push(friend);
+  console.log(userObj.data.friends);
+  return userObj.data.friends;
+}
+addFriend(user, 'pete');
