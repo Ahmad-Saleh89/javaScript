@@ -278,3 +278,52 @@ function addFriend(userObj, friend){
   return userObj.data.friends;
 }
 addFriend(user, 'pete');
+
+/***************************************/
+/****  Basic Algorithm Scripting   ****/
+/***************************************/
+
+// Convert Celsius to Fahrenheit
+function convertToF(celsius){
+  return celsius * (9/5) + 32;
+}
+console.log(convertToF(-30));
+
+// Reverse a String
+function reverseString(str){
+ str = str.split("").reverse().join("");
+  console.log(str);
+  return str;
+}
+reverseString('Ahmad');
+
+// Factorialize a Number 
+function factorialize(num){
+  let result = 1;
+  if (num > 0 && Number.isInteger(num)){
+    for (let i = 1; i <= num; i++){
+      result = result * i;
+    }
+  }else if(num == 0){
+    console.log(1);
+    return 1;
+  }else{
+    console.log(num + " cannot be factorialized!")
+    return false;
+  }
+  console.log(result);
+}
+factorialize(6);
+
+// Factorializing using Recursion
+function factor(num){
+  if(num < 0 || Number.isInteger(num) === false){
+    console.log("Boooo!")
+    return false;
+  }else if(num == 0){
+    return 1;
+  }else{
+   return num * factor(num-1);
+  }
+}
+console.log(factor(5));
