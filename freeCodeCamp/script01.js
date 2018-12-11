@@ -361,9 +361,35 @@ function largestOfFour(arr) {
   let oneArray = arr.map(function(elem){
     return Math.max(...elem);
   })
-
-
   return oneArray;
 }
 
 console.log(largestOfFour([[4, 5, 1, 3], [13, 27, 18, 26], [32, 35, 37, 39], [1000, 1001, 857, 1]]));
+
+// Confirm the Ending
+function confirmEnding(str, target){
+  for(let i = 0; i <= target.length-1; i++){
+    if(target[i] !== str[str.length-target.length + i]){
+      console.log(target[i]);
+      console.log(str[str.length-target.length+i]);
+      return false;
+    }
+  }
+  return true; 
+}
+console.log(confirmEnding("He has to give me a new name", "name"));
+console.log(confirmEnding("Open sesame", "pen"));
+
+// Confirm the Ending: Another way
+function confirmEnd(str, target){
+  // Here we are returning the comparson result: true or false
+  return str.slice(str.length - target.length) === target;
+}
+console.log(confirmEnd("He has to give me a new name", "nami"));
+
+// Simplest way is to use the built-in endsWith()
+function confirmEndd(str, target){
+  return str.endsWith(target);
+}
+console.log(confirmEndd("He has to give me a new name", "nami"));
+console.log(confirmEndd("He has to give me a new name", "name"));
