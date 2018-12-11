@@ -317,13 +317,53 @@ factorialize(6);
 
 // Factorializing using Recursion
 function factor(num){
+  // Termination condition
   if(num < 0 || Number.isInteger(num) === false){
     console.log("Boooo!")
     return false;
-  }else if(num == 0){
+  }
+  // A Base Case: 
+  else if(num == 0){
     return 1;
-  }else{
+  }
+  // The Recursion
+  else{
    return num * factor(num-1);
   }
 }
 console.log(factor(5));
+
+// Find the Longest Word in a String
+// First Way: ES5
+function findLongestWord(str){
+  function elemLength(elem){
+    return elem.length;
+  }
+  // split str and find the length of each element
+  var strArray = str.split(" ").map(elemLength);
+  // Return the max num
+  var max = strArray.reduce(function(a,b){
+    return Math.max(a,b);
+  });
+  return max;
+}
+console.log(findLongestWord("The quick brown fox jumped over the lazy dog"));
+
+// Second Way: ES6
+function longestWord(str){
+  let strArray = str.split(" ").map((elem) => elem.length);
+  return Math.max(...strArray);
+}
+console.log(longestWord("The quick brown fox jumped over the lazy dog"));
+
+// Return Largest Numbers in Arrays:
+function largestOfFour(arr) {
+  let oneArray = arr.map(function(elem){
+    return Math.max(...elem);
+  })
+
+
+  return oneArray;
+}
+
+console.log(largestOfFour([[4, 5, 1, 3], [13, 27, 18, 26], [32, 35, 37, 39], [1000, 1001, 857, 1]]));
