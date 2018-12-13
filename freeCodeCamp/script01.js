@@ -360,7 +360,7 @@ console.log(longestWord("The quick brown fox jumped over the lazy dog"));
 function largestOfFour(arr) {
   let oneArray = arr.map(function(elem){
     return Math.max(...elem);
-  })
+  });
   return oneArray;
 }
 
@@ -393,3 +393,94 @@ function confirmEndd(str, target){
 }
 console.log(confirmEndd("He has to give me a new name", "nami"));
 console.log(confirmEndd("He has to give me a new name", "name"));
+
+// Repeat a String: using for loop
+function repeatStringNumTimes(str, num){
+  if(num < 0){
+    return "";
+  }
+  let repeatedStr = str;
+  for(let i = 1; i < num; i++){
+   str += repeatedStr;
+  }
+  return str;
+}
+console.log(repeatStringNumTimes("abc", 3));
+
+// Repeat a string using recursion:
+function repeatIt(str, num){
+  if(num < 0){
+    return "";
+  }else if(num === 1){
+    return str;
+  }else{
+    return str + repeatIt(str, num-1);
+  }
+}
+console.log(repeatIt("ahmad", 3));
+
+// Repeat a string using built-in repeat() method
+function repeatMe(str, num){
+  if(num < 0){
+    return "";
+  }else{
+    return str.repeat(num);
+  }
+}
+console.log(repeatMe("Hello ", 3));
+
+// Truncate a String
+function truncateString(str, num){
+  if(num >= str.length){
+    return str;
+  }
+  return str.substr(0,num) + "...";
+}
+console.log(truncateString("ahmadsaleh", 8));
+
+// Find Element
+function findElement(arr, func) {
+for(let i = 0; i < arr.length; i++){
+  if(func(arr[i]) === true){
+    return arr[i];
+  }
+}
+return undefined;
+}
+console.log(findElement([1, 3, 5, 8, 9, 10], function(num) { return num % 2 === 0; }));
+
+// Boo Who Challenge: check if a value is boolean
+function boowho(bool){
+  if(bool === true || bool === false){
+    return true;
+  }
+  return false;
+}
+console.log(boowho(null));
+
+// check if a value is boolean: using typeof
+function isBoolean(bool){
+  if(typeof bool === Boolean){
+    return true;
+  }
+  return false;
+}
+console.log(isBoolean(null));
+
+// Title Case a Sentence
+function titleCase(str){
+  return str.split(" ").map(function(elem){
+    var firstLetter = elem.charAt(0).toUpperCase();
+    var  word = firstLetter + elem.slice(1).toLowerCase();
+    return word;
+  }).join(" ");
+}
+console.log(titleCase("Ahmad saleh is awesome"));
+
+// Title Case a Sentence: another way
+function capitalizeIt(str){
+  return str.split(" ").map(function(elem){
+    return elem.toLowerCase().replace(elem.charAt(0), elem.charAt(0).toUpperCase());
+  }).join(" ");
+}
+console.log(capitalizeIt("ahmad is really an awesome person"));
