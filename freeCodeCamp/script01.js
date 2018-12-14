@@ -484,3 +484,39 @@ function capitalizeIt(str){
   }).join(" ");
 }
 console.log(capitalizeIt("ahmad is really an awesome person"));
+
+// Slice and Splice
+function frankenSplice(arr1, arr2, n){
+  return arr2.slice(0,n).concat(arr1).concat(arr2.slice(n));
+}
+console.log(frankenSplice([1, 2, 3], [4, 5], 1));
+console.log(frankenSplice([1, 2], ["a", "b"], 1));
+
+// Falsy Bouncer
+function bouncer(arr){
+  return arr.filter(function(elem){
+    if (Boolean(elem) === true){
+      return elem;
+    }
+  });
+}
+console.log(bouncer([7, "ate", "", false, 9]));
+
+// Falsy Bouncer:
+function bouncerIt(arr){
+  return arr.filter(Boolean);
+}
+console.log(bouncerIt([7, "ate", "", false, 9]));
+
+// Where do I belong
+function getIndex(arr, num){
+  arr.push(num);
+  return arr.sort((a,b) => a - b).indexOf(num);
+}
+console.log(getIndex([2, 5, 10], 15));
+
+// Where do I belong
+function getIndexOf(arr, num){
+  return arr.concat(num).sort((a,b) => a - b).indexOf(num);
+}
+console.log(getIndexOf([2, 20, 10], 19));
