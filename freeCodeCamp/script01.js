@@ -520,3 +520,44 @@ function getIndexOf(arr, num){
   return arr.concat(num).sort((a,b) => a - b).indexOf(num);
 }
 console.log(getIndexOf([2, 20, 10], 19));
+
+// Mutations
+function mutation(arr){
+for(let i = 0; i < arr[1].length; i++){
+  let mutatReg = new RegExp(arr[1][i], "gi");
+  let mutatResult = mutatReg.test(arr[0]);
+  if(mutatResult === false){
+    return false;
+  }
+}return true;
+}
+console.log(mutation(["hello", "hell"]));
+
+// Mutations: another way
+function mutation2(arr){
+  for (let i = 0; i < arr[1].length; i++){
+    if(arr[0].toLowerCase().indexOf(arr[1][i].toLowerCase())== -1){
+      return false;
+    }
+  }return true;
+}
+console.log(mutation2(["AHmad is great", "gbae"]));
+
+// Chunky Monkey
+function chunky(arr, size){
+  let chunked = []
+  for(let i = 0; i < arr.length; i+=size){
+    chunked.push(arr.slice(i, i+size));
+  }
+return chunked;
+}
+console.log(chunky(["a", "b", "c", "d", "h"], 2));
+
+// Chunky Monkey: recursion
+function chunk(arr, size){
+  if(arr.length <= size){
+    return [arr];
+  }
+  return [arr.slice(0, size)].concat(chunk(arr.slice(size), size));
+}
+console.log(chunk(["a", "b", "c", "d", "h"], 2));
