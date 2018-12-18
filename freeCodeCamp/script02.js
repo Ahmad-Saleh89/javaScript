@@ -33,7 +33,6 @@ console.log(grayDog.name);
 function Dog(name, color){
   this.name = name;
   this.color = color;
-  this.numLegs = 4;
 }
 let tata = new Dog("Tata", "brown");
 
@@ -49,3 +48,37 @@ for (let property in tata){
 }
 console.log(ownProp);
 
+// Use Prototype properties to Reduce Duplicated Code
+/* Since all dogs have 4 legs, we don't have to include it in the 
+Dog Constructor.
+A prototype is an OBJECT that is shared among ALL instances */
+Dog.prototype.numLegs = 4;
+/* Now all Dog instances will have access to numLegs porp */
+console.log(tata.numLegs);
+/* Notice that this.name = name; is own property
+However, numLegs is prototype property */
+
+
+// The constructor property
+console.log(tata.constructor);
+// Example:
+function joinOurDogs(candidate){
+  if(candidate.constructor === Dog){
+    return true;
+  }else{
+    return false;
+  }
+}
+console.log(joinOurDogs(tata));
+
+// Change the prototype to a new Object
+Dog.prototype = {
+  constructor: Dog,
+  numEyes: 2,
+  eat: function(){
+    console.log("nom nom nom");
+  },
+  sayName: function(){
+    console.log("My name is: " + this.name);
+  }
+};
