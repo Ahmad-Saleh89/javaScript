@@ -34,33 +34,44 @@ function Dog(name, color){
   this.name = name;
   this.color = color;
 }
-let tata = new Dog("Tata", "brown");
+// Use Prototype properties to Reduce Duplicated Code
+/* Since all dogs have 4 legs, we don't have to include it in the 
+Dog Constructor.
+* Notice that this.name = name; is own property
+However, numLegs is prototype property */
 
+// Change the prototype to a new Object
+Dog.prototype = {
+  constructor: Dog,
+  numEyes: 2,
+  eat: function(){
+    console.log("nom nom nom");
+  }
+};
+
+/* Important: the prototype must be declared before creating a new instance */
+let tatan = new Dog("Tata", "brown");
+
+console.log(Dog.prototype.isPrototypeOf(tatan));
 // Verify an Object's Constructor with instanceof
-console.log(tata instanceof Dog);
+console.log(tatan instanceof Dog);
+
+/* A prototype is an OBJECT that is shared among ALL instances */
+Dog.prototype.numLegs = 4;
+/* Now all Dog instances will have access to numLegs porp */
+console.log(tatan.numLegs);
 
 // Understand Own Properties
 let ownProp = [];
-for (let property in tata){
-  if(tata.hasOwnProperty(property)){
+for (let property in tatan){
+  if(tatan.hasOwnProperty(property)){
     ownProp.push(property);
   }
 }
 console.log(ownProp);
 
-// Use Prototype properties to Reduce Duplicated Code
-/* Since all dogs have 4 legs, we don't have to include it in the 
-Dog Constructor.
-A prototype is an OBJECT that is shared among ALL instances */
-Dog.prototype.numLegs = 4;
-/* Now all Dog instances will have access to numLegs porp */
-console.log(tata.numLegs);
-/* Notice that this.name = name; is own property
-However, numLegs is prototype property */
-
-
 // The constructor property
-console.log(tata.constructor);
+console.log(tatan.constructor);
 // Example:
 function joinOurDogs(candidate){
   if(candidate.constructor === Dog){
@@ -69,16 +80,56 @@ function joinOurDogs(candidate){
     return false;
   }
 }
-console.log(joinOurDogs(tata));
+console.log(joinOurDogs(tatan));
 
-// Change the prototype to a new Object
-Dog.prototype = {
-  constructor: Dog,
+
+function Bird(name, color){
+  this.name = name;
+  this.color = color;
+}
+Bird.prototype = {
+  constructor: Bird,
   numEyes: 2,
   eat: function(){
-    console.log("nom nom nom");
-  },
-  sayName: function(){
-    console.log("My name is: " + this.name);
+    return ("ko ko ko");
   }
 };
+let hamood = new Bird("Hamood");
+
+console.log(Bird.prototype.isPrototypeOf(hamood));
+console.log(hamood.eat());
+
+/* Note: Object's prototype itself is also an object. Hence,
+A prototype can have its own prototype. */
+//  In this case ==>>
+console.log(Object.prototype.isPrototypeOf(Bird.prototype)); // => true
+
+// Use Inheritance So You Don't Repeat Yourself
+function Animal(){
+
+}
+Animal.prototype = {
+  constructor: Animal,
+  sayName: function(name){
+    this.name = name;
+    return ("My name is: " + name);
+  }
+}
+
+// Inherit Behaviors from a Supertype
+let duck = Object.create(Animal.prototype);
+console.log(duck.sayName("Ducky"));
+
+let bob = Object.create(Animal.prototype);
+console.log(bob.sayName("Bob"));
+/* bob & duck are new instances of Animal */
+
+// You can set the prototype of the previous subtypes or (children)
+Dog.prototype = Object.create(Animal.prototype);
+Bird.prototype = Object.create(Animal.prototype);
+let frank = new Dog("Frank", "White");
+console.log(frank.sayName(frank.name));
+console.log(frank.constructor); // => is now Animal @@@@
+/* In order to avoid that, you need to set the constructor manually:  */
+Dog.prototype.constructor = Dog;
+console.log(frank.constructor); // => now it is Dog :)
