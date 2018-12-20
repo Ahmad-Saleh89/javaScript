@@ -133,3 +133,9 @@ console.log(frank.constructor); // => is now Animal @@@@
 /* In order to avoid that, you need to set the constructor manually:  */
 Dog.prototype.constructor = Dog;
 console.log(frank.constructor); // => now it is Dog :)
+
+// Dog can have its own prototype in addition to those inherited from Animal
+Dog.prototype.bark = function(){
+  return "I am barking";
+}
+console.log(frank.bark());
