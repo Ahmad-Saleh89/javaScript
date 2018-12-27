@@ -98,6 +98,7 @@ var watchList = [
     "Year": "2010",
     "Rated": "PG-13",
     "Released": "16 Jul 2010",
+    "Director": "Christopher Nolan",
     "imdbRating": "8.8"
  },
  {  
@@ -105,6 +106,7 @@ var watchList = [
     "Year": "2014",
     "Rated": "PG-13",
     "Released": "07 Nov 2014",
+    "Director": "Christopher Nolan",
     "imdbRating": "8.6"
  },
  {
@@ -112,6 +114,7 @@ var watchList = [
     "Year": "2008",
     "Rated": "PG-13",
     "Released": "18 Jul 2008",
+    "Director": "Christopher Nolan",
     "imdbRating": "9.0"
  },
  {  
@@ -119,6 +122,7 @@ var watchList = [
     "Year": "2005",
     "Rated": "PG-13",
     "Released": "15 Jun 2005",
+    "Director": "Christopher Nolan",
     "imdbRating": "8.3"
  },
  {
@@ -126,6 +130,7 @@ var watchList = [
     "Year": "2009",
     "Rated": "PG-13",
     "Released": "18 Dec 2009",
+    "Director": "James Cameron",
     "imdbRating": "7.9"
  }
 ];
@@ -145,15 +150,26 @@ rating = watchList.map((obj) => {
 // }
 console.log(rating); 
 
-// Callback functions
+/* Use reduce to find the average IMDB rating of the movies 
+directed by Christopher Nolan. */
+// Filter Nolan's movies
+let nolan = watchList.filter((obj) => obj["Director"] === "Christopher Nolan");
+let nolanAvg = nolan.reduce(function(sum, item){
+  return sum + parseFloat(item.imdbRating) / nolan.length;
+}, 0);
+console.log(nolan);
+console.log(nolanAvg);
+
+
+// Passing Functions as parameters
 var s = [23, 65, 98, 5];
 
 /* Trying to make a function acts like map() method */
-Array.prototype.myMap = function(callback){
+Array.prototype.myMap = function(func){
   var newArray = [];
 // this.forEach(a => newArray.push(callback(a)));
 this.forEach(function(x){
-  newArray.push(callback(x));
+  newArray.push(func(x));
 });
   return newArray;
 };
@@ -161,3 +177,42 @@ var new_s = s.myMap(function(item){
   return item * 2;
 });
 console.log(new_s);
+
+/* Trying to make a function acts like filter() method */
+var ftr = [23, 65, 98, 5];
+Array.prototype.myFilter = function(func){
+  var newArray = [];
+  this.forEach(function(x){
+    if(func(x) === true){
+      newArray.push(x);
+    }
+  });
+  return newArray;
+}
+var new_ftr = ftr.myFilter(function(item){
+  return item % 2 === 1;
+});
+console.log(new_ftr);
+
+// Slice Method
+function sliceArray(arr, begin, end){
+  var newArr = arr;
+  return newArr.slice(begin, end);
+}
+var inputAnim = ["cat", "Dog", "Tiger", "Zebra", "Ant"];
+console.log(sliceArray(inputAnim, 1, 3));
+
+// Note that slice doesn't mutate the original array
+function noMutate(cities){
+  return cities.slice(0, 3);
+}
+var inputCities = ["Chicago", "Delhi", "Islamabad", "London", "Berlin"];
+console.log(noMutate(inputCities));
+
+// Combine 2 arrays using concat() ---- Also does not mutate the original
+function useConcat(original, attach){
+  return original.concat(attach);
+}
+var first = [1, 2, 3];
+var second = [4, 5];
+console.log(useConcat(first, second));
