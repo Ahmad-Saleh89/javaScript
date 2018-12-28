@@ -216,3 +216,62 @@ function useConcat(original, attach){
 var first = [1, 2, 3];
 var second = [4, 5];
 console.log(useConcat(first, second));
+
+// sort method : it mutates the original
+function alphabetical(arr){
+  return arr.sort();
+}
+console.log(alphabetical(["a", "d", "c", "a", "z", "g"]));
+
+// Sorting without mutation
+var anyArr = [5, 6, 3, 2, 9, 11];
+function noMutateSort(arr){
+  let passedArr = [];
+  return passedArr.concat(arr).sort((a, b) => a - b);
+}
+console.log(noMutateSort(anyArr));
+
+// Split
+function splitify(str) {
+  return str.split(/\W/);
+  // return str.split(/[^A-Za-z0-9_]/);
+}
+console.log(splitify("Hello World,I-am code"));
+
+// Make a sentence
+function sentensify(str) {
+  return str.split(/\W/).join(" ");
+}
+console.log(sentensify("May-the-force-be-with-you"));
+
+var blogTitle = " Winter  Is Coming";
+
+// UrlSlug
+function urlSlug(title) {
+  return title.toLowerCase().split(" ").filter((a) => a !== "").join("-");
+}
+
+var winterComing = urlSlug(blogTitle);
+console.log(winterComing);
+
+// Use every() method
+function checkPositive(arr) {
+  return arr.every((val) => val >= 0);
+}
+console.log(checkPositive([1, 2, 3, -4, 5]));
+
+// Use some() method
+function somePositive(arr) {
+  return arr.some((val) => val >= 0);
+}
+console.log(somePositive([1, 2, 3, -4, 5]));
+
+// Introduction to Currying and Partial Application
+function addThem(x) {
+  return function(y){
+    return function(z){
+      return x + y + z;
+    }
+  }
+}
+console.log(addThem(10)(20)(30));
