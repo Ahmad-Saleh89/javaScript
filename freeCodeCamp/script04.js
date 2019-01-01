@@ -77,3 +77,39 @@ console.log(Array.from('foo'));
 
 console.log(Array.from([1, 2, 3], x => x + x));
 // expected output: Array [2, 4, 6]
+
+// Wherefore art thou
+/* Return a collection of objects that contains the provided source / keys & values must match */
+function whatIsInAName(collection, source) {
+  let sourceKeys = Object.keys(source); // Returns an array of source keys ["apple", "bat"]
+  return collection.filter(obj => { // Remember that filter returns true or false
+    for(let i = 0; i < sourceKeys.length; i++){
+        if(!obj.hasOwnProperty(sourceKeys[i]) || obj[sourceKeys[i]] !== source[sourceKeys[i]]){
+        return false; // test failed
+      }
+    }
+    return true; // test passed
+  }); 
+}
+
+console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 }], { "apple": 1, "bat": 2 }));
+
+// Spinal Tap Case
+function spinalCase(str) {
+  return str.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase().split(/[^A-Za-z0-9]/).join("-");
+}
+console.log(spinalCase('AllThe-small Things'));
+
+// Pig Latin Language
+function translatePigLatin(str) {
+  // Detect only the first vowel and split
+  let splitIt = str.split(/[aeiou]/, 1);
+  // if the first char is a vowel
+  if(splitIt[0].length == 0){
+    return str + "way";
+  }
+  // anything else
+  return str.slice(splitIt[0].length) + splitIt[0] + "ay";
+}
+
+console.log(translatePigLatin("eight"));
