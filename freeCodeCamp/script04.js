@@ -180,3 +180,47 @@ function dnaPair(str){
   return arr.map(x => [x , pairs[x]]);
 }
 console.log(dnaPair("GCG"));
+
+// Missing Letters
+function fearNotLetter(str) {
+  let strArr = [...str];
+  let uniCode = strArr.map(x => str.charCodeAt(strArr.indexOf(x)));
+
+  for(let i = 0; i < uniCode.length; i++){
+    if(uniCode[i+1] - uniCode[i] >= 2){
+     return String.fromCharCode(uniCode[i] + 1);
+    }
+  }
+}
+
+console.log(fearNotLetter("abce"));
+
+// Sorted Union
+function uniteUnique(arr) {
+  let args = [...arguments];
+  let slicedArgs = args.slice(1);
+  console.log(slicedArgs);
+  let final = slicedArgs.map(elem => {
+       return elem.filter(x => {
+        for(let i = 0; i < args[0].length; i++){
+         if(x === args[0][i]){
+          return false;
+        }
+      }
+      return true;
+    });
+  });
+  
+  let result =[];
+  for(item in final){
+    for(val of final[item]){
+      if(final[item].length > 0){
+        result.push(val);
+      }
+    }
+  }
+
+  return args[0].concat(result);
+}
+
+console.log(uniteUnique([1, 3, 2], [1, [5]], [2, [4]]));
