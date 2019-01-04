@@ -181,7 +181,7 @@ function dnaPair(str){
 }
 console.log(dnaPair("GCG"));
 
-// Missing Letters
+// Missing Letters : Challenge 9
 function fearNotLetter(str) {
   let strArr = [...str];
   let uniCode = strArr.map(x => str.charCodeAt(strArr.indexOf(x)));
@@ -195,13 +195,13 @@ function fearNotLetter(str) {
 
 console.log(fearNotLetter("abce"));
 
-// Sorted Union
+// Sorted Union : Challenge 10
 function uniteUnique(arr) {
   let args = [...arguments];
   let slicedArgs = args.slice(1);
   console.log(slicedArgs);
-  let final = slicedArgs.map(elem => {
-       return elem.filter(x => {
+  let final = slicedArgs.map(elem => { // loop through the sliced
+       return elem.filter(x => { // return true of false
         for(let i = 0; i < args[0].length; i++){
          if(x === args[0][i]){
           return false;
@@ -210,7 +210,7 @@ function uniteUnique(arr) {
       return true;
     });
   });
-  
+
   let result =[];
   for(item in final){
     for(val of final[item]){
@@ -219,8 +219,41 @@ function uniteUnique(arr) {
       }
     }
   }
-
   return args[0].concat(result);
 }
-
 console.log(uniteUnique([1, 3, 2], [1, [5]], [2, [4]]));
+
+// Less confusing code
+function uniteThem(arr) {
+  let args = [...arguments];
+  let slicedArgs = args.slice(1);
+  console.log(slicedArgs);
+  let final = [];
+  slicedArgs.map(elem => {
+    for(let i = 0; i < elem.length; i++){
+      if(!args[0].includes(elem[i])){
+        final.push(elem[i]);
+      }
+    }
+  });
+  return args[0].concat(final);
+}
+console.log(uniteThem([1, 3, 2], [1, [5]], [2, [4]]));
+
+// Another way:
+function unite(){
+  let args = [...arguments];
+  let concatArgs = []; // join() doesn't help here
+  for(let i = 0; i < args.length; i++){
+    concatArgs = concatArgs.concat(args[i]);
+  }
+  // Look for the repeated elements and return false
+  let final = concatArgs.filter(function(item, index){
+    /*the indexof the repeated elem will not equal 'index' 
+    because indexOf() will catch the first appearance only, so: */
+    return concatArgs.indexOf(item) === index;
+  });
+
+  return final;
+}
+console.log(unite([1, 3, 2], [1, [5]], [2, [4]]));
