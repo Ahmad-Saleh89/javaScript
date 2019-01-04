@@ -212,8 +212,8 @@ function uniteUnique(arr) {
   });
 
   let result =[];
-  for(item in final){
-    for(val of final[item]){
+  for(var item in final){
+    for(var val of final[item]){
       if(final[item].length > 0){
         result.push(val);
       }
@@ -253,7 +253,41 @@ function unite(){
     because indexOf() will catch the first appearance only, so: */
     return concatArgs.indexOf(item) === index;
   });
-
   return final;
 }
 console.log(unite([1, 3, 2], [1, [5]], [2, [4]]));
+
+// Convert HTML Entities : Challenge 11
+function convertHTML(str) {
+  let htmlEntities = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&apos;'
+  };
+  let strArr = str.split("");
+  let newArr = strArr.map(x => {
+    for(var entity in htmlEntities){
+      if(x === entity){
+        return htmlEntities[entity];
+      }
+    }
+    return x;
+  });
+  return newArr.join("");
+}
+console.log(convertHTML("Dolce< & Gabbana"));
+
+// Convert HTML Entities : advanced
+function convertEntities(str){
+  let htmlEntities = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&apos;'
+  };
+  return str.split("").map(x => htmlEntities[x] || x).join('');
+}
+console.log(convertEntities("Dolce< & Gabbana"));
