@@ -291,3 +291,23 @@ function convertEntities(str){
   return str.split("").map(x => htmlEntities[x] || x).join('');
 }
 console.log(convertEntities("Dolce< & Gabbana"));
+
+// Sum All Odd Fibonacci Numbers : Challenge 12
+function sumFibs(num) {
+  if(num === 1){
+    return 1;
+  }
+  // First get all fibonacci numberes (odds & evens)
+  let fibonacci = [1,1];
+  for(let i = 0; i<= num; i++){
+    if(fibonacci[i+1] <= num){
+      fibonacci.push(fibonacci[i] + fibonacci[i+1]);
+    }
+  }
+  // Then get only odds and less than provided num
+  fibonacci= fibonacci.filter(x => x <= num && x % 2 == 1);
+  // return sum
+  return fibonacci.reduce((total, item) => total+item);
+}
+
+console.log(sumFibs(1000));
