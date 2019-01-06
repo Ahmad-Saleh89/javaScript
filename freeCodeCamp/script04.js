@@ -323,95 +323,81 @@ function sumPrimes(num) {
   console.log(primeNums);
   return primeNums.reduce((total, item) => total+item);
 }
-
 console.log(sumPrimes(20));
 
-// Smallest Common Multiple : Challenge 14
-// function smallestCommons(arr) {
-//   let newArr = [];
-//   let multiple = [];
-//   for(let i = Math.max(...arr); i >= Math.min(...arr); i--){
-//     newArr.push(i);
-//     multiple.push(i);
-//   }
 
+// Smallest Common Number: Challenge 14
+/* Review "Euclidean Algorithm" in order to understand it.
+gcd is "Greatest Common Diviser".
+lcd is "Lowest Common Multiple" */
+function smallestCommon(arr) {
+  var range = [];
+  for (var i = Math.max(arr[0], arr[1]); i >= Math.min(arr[0], arr[1]); i--) {
+  range.push(i);
+  }
 
-//   function multipleIt(myArr){
+  // can use reduce() in place of this block
+  var lcm = range[0];
+  for (i = 1; i < range.length; i++) {
+  var GCD = gcd(lcm, range[i]);
+  // debugger;
+  lcm = (lcm * range[i]) / GCD;
+  }
+  return lcm;
 
-//     if(multiple[0] === multiple[1] || multiple[0] >= 100){
-//       return multiple[0];
-//     }
-//    let temp = [];
-//     myArr.map(x =>{
-//       var m = newArr[myArr.indexOf(x)];
-//       // debugger;
-//       temp.push(m + x);
-//       multiple.push(m+x);
-//     });
-//     console.log(multiple);
-//     console.log(newArr);
-//     multiple.sort((a,b) => b -a);
-//    return multipleIt(temp);
-//   }
+  function gcd(x, y) {    // Implements the Euclidean Algorithm
+    if(x%y === 0){
+      return y;
+    }else{
+      return gcd(y, x%y);
+    }
+  }
+}
+console.log(smallestCommon([2,10]));
 
-//   return multipleIt(newArr);
+/* The coming approach is long, however it is more efficent.
+The main idea is to apply the "Euclidean Algorithm" , check YouTube to understand it. 
+@In this Approach:
+- It is easier if the first elem in newArr is an even number
+- Also, for the first 3 elem, no need to apply "Euclidean Algorithm" on each elem (it is redundant)... just return product.
+- No need to apply "Euclidean Algorithm" on elements smaller than (1/2 of the biggest even element) Ex: if the number is divisble by 8 -> it is divisible by 4 for sure  */
 
-// }
+function smallestCommons(arr) {
+  let newArr = [];
+  for(let i = Math.max(...arr); i >= Math.min(...arr); i--){
+    newArr.push(i);
+  }
+  let odd = 1;
+  if(newArr[0]%2 !== 0){
+    odd = newArr[0];
+    newArr.splice(0,1);
+  }
+  if(newArr.length === 2){
+    return odd * newArr[0] * newArr[1];
+  }
 
-// console.log(smallestCommons([1,5]));
+  let product = (odd * newArr[0] * newArr[1] * newArr[2]) /2;
 
-// Multiple only the biggest num  and apply % on all elements of array
+  if(newArr.length === 3){
+    return product;
+  }else if(Math.min(...newArr) <= newArr[0]/2){
+    newArr = newArr.filter(x => x > newArr[0]/2);
+    if(newArr.length <= 3){
+      return odd * smallestCommons(newArr);
+    }
+  }
+    for(let i = 3; i < newArr.length; i++){
+      var greatestCD = gcd(product, newArr[i]);
+      product = product * newArr[i]/greatestCD;
+    }
+    return product;
 
-// function smallestCommons(arr) {
-//   let newArr = [];
-//   for(let i = Math.max(...arr); i >= Math.min(...arr); i--){
-//     newArr.push(i);
-//   }
-//   let biggest = newArr[0];
-//   function multiple(x){
-//     let temp = biggest + x;
-//     for(let i = 1; i < newArr.length; i++){
-//       if(temp % newArr[i] !== 0){
-//         return multiple(temp);
-//       }
-//     }
-//     return temp;
-//   }
-//  return multiple(biggest);
-
-// }
-
-// console.log(smallestCommons([1,5]));
-
-
-
-// function smallestCommons(arr) {
-//   let newArr = [];
-//   for(let i = Math.max(...arr); i >= Math.min(...arr); i--){
-//     newArr.push(i);
-//   }
-//   let biggest = newArr[0];
-//   let temp = 0;
-//   var i = 1;
-//   function multiple(x){
-//     do{
-//       temp = x + biggest;  
-//       if((temp % newArr[i] === 0) === true){
-//         debugger;
-//         i++;
-//         multiple(temp-biggest);
-//       }else{
-//         debugger;
-//         i = 1;
-//         multiple(temp);
-//       }
-
-//     }
-//     while(i < newArr.length);
-//     return temp;
-//   }
-//   return multiple(biggest);
-
-// }
-
-// console.log(smallestCommons([1,5]));
+    function gcd(x, y) {
+   // Implements the Euclidean Algorithm
+      if (y === 0)
+          return x;
+      else
+          return gcd(y, x%y);
+      }
+}
+console.log(smallestCommons([9,13]));
