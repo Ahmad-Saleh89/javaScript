@@ -311,3 +311,107 @@ function sumFibs(num) {
 }
 
 console.log(sumFibs(1000));
+
+// Sum all primes : Challenge 13
+function sumPrimes(num) {
+  let myNums = [];
+  for(let i = 3; i <= num; i+=2){
+    myNums.push(i);
+  }
+  let primeNums = myNums.filter(x => x % 3 !==0 && x % 5 !== 0 && x % 7 !== 0 && x % 9 !==0);
+  primeNums.push(2,3,5,7);
+  console.log(primeNums);
+  return primeNums.reduce((total, item) => total+item);
+}
+
+console.log(sumPrimes(20));
+
+// Smallest Common Multiple : Challenge 14
+// function smallestCommons(arr) {
+//   let newArr = [];
+//   let multiple = [];
+//   for(let i = Math.max(...arr); i >= Math.min(...arr); i--){
+//     newArr.push(i);
+//     multiple.push(i);
+//   }
+
+
+//   function multipleIt(myArr){
+
+//     if(multiple[0] === multiple[1] || multiple[0] >= 100){
+//       return multiple[0];
+//     }
+//    let temp = [];
+//     myArr.map(x =>{
+//       var m = newArr[myArr.indexOf(x)];
+//       // debugger;
+//       temp.push(m + x);
+//       multiple.push(m+x);
+//     });
+//     console.log(multiple);
+//     console.log(newArr);
+//     multiple.sort((a,b) => b -a);
+//    return multipleIt(temp);
+//   }
+
+//   return multipleIt(newArr);
+
+// }
+
+// console.log(smallestCommons([1,5]));
+
+// Multiple only the biggest num  and apply % on all elements of array
+
+// function smallestCommons(arr) {
+//   let newArr = [];
+//   for(let i = Math.max(...arr); i >= Math.min(...arr); i--){
+//     newArr.push(i);
+//   }
+//   let biggest = newArr[0];
+//   function multiple(x){
+//     let temp = biggest + x;
+//     for(let i = 1; i < newArr.length; i++){
+//       if(temp % newArr[i] !== 0){
+//         return multiple(temp);
+//       }
+//     }
+//     return temp;
+//   }
+//  return multiple(biggest);
+
+// }
+
+// console.log(smallestCommons([1,5]));
+
+
+
+// function smallestCommons(arr) {
+//   let newArr = [];
+//   for(let i = Math.max(...arr); i >= Math.min(...arr); i--){
+//     newArr.push(i);
+//   }
+//   let biggest = newArr[0];
+//   let temp = 0;
+//   var i = 1;
+//   function multiple(x){
+//     do{
+//       temp = x + biggest;  
+//       if((temp % newArr[i] === 0) === true){
+//         debugger;
+//         i++;
+//         multiple(temp-biggest);
+//       }else{
+//         debugger;
+//         i = 1;
+//         multiple(temp);
+//       }
+
+//     }
+//     while(i < newArr.length);
+//     return temp;
+//   }
+//   return multiple(biggest);
+
+// }
+
+// console.log(smallestCommons([1,5]));
