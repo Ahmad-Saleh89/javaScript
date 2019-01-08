@@ -449,6 +449,7 @@ function smallestCommons(arr) {
 }
 console.log(smallestCommons([9,13]));
 
+// ******************************************** //
 // Drop It: Challenge 15
 function dropElements(arr, func) {
   let myArr = arr.map(func);
@@ -483,3 +484,42 @@ function dropThem(arr, func) {
   return arr;
 }
 console.log(dropThem([1, 2, 3, 4], function(n) {return n >= 3;}));
+
+// **************************************** //
+// SteamRoller : Challenge 16
+function steamrollArray(arr) {
+  let steamed = [];
+  function checkType(elem){
+    if(typeof elem !== "object"){
+      steamed.push(elem);
+    }else if(typeof elem === "object" && elem.length === undefined){
+      steamed.push(elem);
+    }
+    else if(Array.isArray(elem) && elem.length === 1){
+       checkType(elem[0]);
+    }else if(elem.length > 1){
+       elem.map(x => checkType(x));
+    }
+    return steamed;
+  }
+  return checkType(arr);
+}
+console.log(steamrollArray([1, {}, [3, [[4]]]]));
+
+// Another interesting way:
+// Basically convert arr into a string and do some modifications
+function steamroller(arr) {
+  return arr.toString()
+    .replace(',,', ',')       // "1,2,,3" => "1,2,3"
+    .split(',')               // ['1','2','3']
+    .map(function(v) {
+      if (v == '[object Object]') { // bring back empty objects
+        return {};
+      } else if (isNaN(v)) {        // if not a number (string)
+        return v;
+      } else {
+        return parseInt(v);         // if a number in a string, convert it
+      }
+    });
+}
+console.log(steamroller([1, {}, [3, [[4]]]]));
