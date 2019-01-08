@@ -309,8 +309,8 @@ function sumFibs(num) {
   // return sum
   return fibonacci.reduce((total, item) => total+item);
 }
-
 console.log(sumFibs(1000));
+
 
 // Sum all primes : Challenge 13
 function sumPrimes(num) {
@@ -318,15 +318,62 @@ function sumPrimes(num) {
   for(let i = 3; i <= num; i+=2){
     myNums.push(i);
   }
-  let primeNums = myNums.filter(x => x % 3 !==0 && x % 5 !== 0 && x % 7 !== 0 && x % 9 !==0);
-  primeNums.push(2,3,5,7);
-  console.log(primeNums);
-  return primeNums.reduce((total, item) => total+item);
+ myNums = myNums.filter(x => {
+    if(x === 3 || x === 5 || x === 7 || x === 11){
+      return true;
+    }else if(x % 3 === 0 || x % 5 === 0 || x % 7 === 0 || x % 11 === 0){
+      return false;
+    }
+    return true;
+  });
+  let j = 4;
+  while(Math.pow(myNums[j],2) < num){
+    myNums.splice(myNums.indexOf(Math.pow(myNums[j],2)),1);
+    j++;
+  }
+  let u = 4;
+  let h = u + 1;
+  while(myNums[u] * myNums[h] <= num){
+    while(myNums[u] * myNums[h] <= num){
+      myNums.splice(myNums.indexOf(myNums[u] * myNums[h]),1);
+      h++;
+    }
+    u++;
+    h = u+1;
+  }
+  console.log(myNums);
+  return 2 + myNums.reduce((x,y) => x+y);
 }
-console.log(sumPrimes(20));
+console.log(sumPrimes(10));
 
 
-// Smallest Common Number: Challenge 14
+// Here is a GREAT way to solve it. Try to understand it. It's really easy
+function sumPrime(num) {
+  // Function to get the primes up to max in an array
+  function getPrimes(max) {
+    var sieve = [];
+    var i;
+    var j;
+    var primes = [2];
+    for (i = 3; i <= max; i+=2) {
+      if (!sieve[i]) {
+        // i has not been marked -- it is prime
+        primes.push(i);
+        for (j = i << 1; j <= max; j += i) {
+          // make all multiples equal true, so they don't get pushed
+          sieve[j] = true; 
+        }
+      }
+    }
+    return primes;
+  }
+  // Sum All primes
+  var primes = getPrimes(num);
+  return primes.reduce((total, item) => total + item);
+}
+console.log(sumPrime(977));
+
+// Smallest Common Multiple: Challenge 14
 /* Review "Euclidean Algorithm" in order to understand it.
 gcd is "Greatest Common Diviser".
 lcd is "Lowest Common Multiple" */
