@@ -448,3 +448,38 @@ function smallestCommons(arr) {
       }
 }
 console.log(smallestCommons([9,13]));
+
+// Drop It: Challenge 15
+function dropElements(arr, func) {
+  let myArr = arr.map(func);
+  arr.splice(0,myArr.indexOf(true));
+  if(arr.length === myArr.length && myArr[myArr.length-1] === false){
+    return [];
+  }
+  return arr;
+}
+
+console.log(dropElements([1, 2, 3, 4], function(n) {return n > 5;}));
+
+// Here is also another basic way to do it:
+function dropIt(arr, func) {
+  var times = arr.length;
+  for (var i = 0; i < times; i++) {
+    if (func(arr[0])) {
+      break;
+    } else {
+      arr.shift(); // delete first elem
+    }
+  }
+  return arr;
+}
+console.log(dropIt([1, 2, 3, 4], function(n) {return n >= 3;}));
+
+// Advanced way:
+function dropThem(arr, func) {
+  while(arr.length > 0 && !func(arr[0])) {
+    arr.shift(); // Delete first element
+  }
+  return arr;
+}
+console.log(dropThem([1, 2, 3, 4], function(n) {return n >= 3;}));
