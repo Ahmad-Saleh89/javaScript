@@ -523,3 +523,129 @@ function steamroller(arr) {
     });
 }
 console.log(steamroller([1, {}, [3, [[4]]]]));
+
+/* ****************************************** */
+// Binary Agent: Challenge 17
+function binaryAgent(str) {
+  let myArr =  str.split(" ");
+  let decimal = [128,64,32,16,8,4,2,1];
+  myArr = myArr.map(elem => {
+    let biToDec = 0;
+    for(let i = 0; i < elem.length; i++){
+      if(elem[i] == 0){
+        biToDec = biToDec;
+      }else{
+        biToDec += decimal[i];
+      }
+    }
+    return biToDec;
+  });
+  return myArr.map(x => String.fromCharCode(x)).join("");
+
+}
+console.log(binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"));
+
+// Another way:
+function biAgent(str) {
+  biString = str.split(' ');
+  uniString = [];
+
+/* The second parameter in parseInt() determines which numeral system to be used and it's called the radix*/
+
+  for(i=0;i < biString.length;i++){
+    uniString.push(String.fromCharCode(parseInt(biString[i], 2)));
+  }
+  return uniString.join('');
+}
+console.log(biAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"));
+
+// ************************************ //
+// Truth Check: Challenge 18
+function truthCheck(collection, pre) {
+
+  let truthy = collection.filter(obj => obj[pre]); // filters only the true ones
+  return truthy.length === collection.length; // check boolean
+}
+console.log(truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex"));
+
+// Another way:
+function truthyTruth(collection, pre){
+  return collection.every(obj => obj[pre]);
+}
+console.log(truthyTruth([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex"));
+
+// ************************************** //
+// Arguments Optional : Challenge 19
+function addTogether(){
+  let args = [...arguments];
+  let filtered = args.filter(x => Number.isInteger(x));
+  if(filtered.length < args.length){
+    return undefined;
+  }
+  if(args.length === 1){
+    return function(y){
+      if(Number.isInteger(y)){
+        return args[0] + y;
+      }
+     return undefined;
+    }
+  }
+  return args.reduce((a,b) => a+b);
+}
+console.log(addTogether(2,3));
+console.log(addTogether(5,[6])); // returns undefined
+console.log(addTogether(3) ([6])); // returns udefinded
+console.log(addTogether(3)(6)); // return 9
+
+// ************************************** //
+// Make a Person : Challenge 20
+var Person = function(firstAndLast) {
+  var fullName = firstAndLast;
+
+  this.getFirstName = function() {
+    return fullName.split(" ")[0];
+  };
+
+  this.getLastName = function() {
+    return fullName.split(" ")[1];
+  };
+
+  this.getFullName = function() {
+    return fullName;
+  };
+
+  this.setFirstName = function(name) {
+    fullName = name + " " + fullName.split(" ")[1];
+  };
+
+  this.setLastName = function(name) {
+    fullName = fullName.split(" ")[0] + " " + name;
+  };
+
+  this.setFullName = function(name) {
+    fullName = name;
+  };
+};
+
+var bob = new Person('Bob Ross');
+bob.getFullName();
+bob.setFirstName("ahmad");
+bob.getFirstName();
+bob.setFullName("John Doe");
+bob.getFullName();
+
+// ************************************//
+// Map the Debris: Challenge 21
+function orbitalPeriod(arr) {
+  var GM = 398600.4418;
+  var earthRadius = 6367.4447;
+ return arr.map(obj => {
+  let latitude = obj.avgAlt;
+  delete obj.avgAlt;
+  obj.orbitalPeriod = latitude;
+  return obj;
+  // Not finished yet
+ });
+}
+
+console.log(orbitalPeriod([{name: "iss", avgAlt: 413.6}, {name: "hubble", avgAlt: 556.7}, {name: "moon", avgAlt: 378632.553}]));
