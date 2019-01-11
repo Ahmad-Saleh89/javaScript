@@ -649,3 +649,137 @@ function orbitalPeriod(arr) {
 }
 
 console.log(orbitalPeriod([{name: "iss", avgAlt: 413.6}, {name: "hubble", avgAlt: 556.7}, {name: "moon", avgAlt: 378632.553}]));
+
+// ****************************************** //
+// Advanced Algorithms
+
+// Roman Numeral Conventer: 
+function convertToRoman(num) {
+  const roman = [["I","II","III","IV","V","VI","VII","VIII","IX","X"],["X","XX","XXX","XL","L","LX","LXX","LXXX","XC","C"],["C","CC","CCC","CD","D","DC","DCC","DCCC","CM","M"],["M"]];
+  if(num <=10){
+    return roman[0][num-1];
+  }
+  if(num > 10){
+    let splited =  num.toString().split("").reverse();
+    splited = splited.map(x => parseInt(x));
+ 
+  let result = [];
+  for(let b = 0; b < splited.length; b++){
+    if(b < 3){
+      result.push(roman[b][parseInt(splited[b])-1]);
+    }else if(b === 3){
+      for(let i = 0; i < splited[3]; i++){
+        result.push("M");
+      }
+    }else{
+      return undefined;
+    }
+  }
+return result.reverse().join("");
+}
+}
+
+convertToRoman(36);
+
+
+// ***************************************//
+// Phone Number Validator:
+/* Note: this is very long way to solve it. The more elegent way is to use RegEx */
+function telephoneCheck(str) {
+  if(str.length > 16 || str.length < 10){
+    return false;
+  }
+  let phoneArr = str.split("");
+  let validNum = [];
+  for(let i = 0; i < phoneArr.length; i++){
+    if(Number.isInteger(parseInt(phoneArr[i])) || phoneArr[i] === "(" || phoneArr[i] === ")" || phoneArr[i] === " " || phoneArr[i] === "-"){
+      validNum.push(phoneArr[i]);
+    }
+  }
+  if(!Number.isInteger(parseInt(validNum[0])) && validNum[0] !== "("){
+    return false;
+  }
+  let paranth = [];
+  for(let x = 0; x < validNum.length; x++){
+    if(x < 3 && validNum[x] === "("){
+      paranth.push(validNum[x]);
+    }else if(x >= 3 && x < 7 && validNum[x] === ")"){
+      paranth.push(validNum[x]);
+    }
+  }
+  if(paranth.length === 1){
+    return false;
+  }
+ let  onlyNums = validNum.filter(x => parseInt(x) || x === "0");
+  if(onlyNums.length > 10 && onlyNums[0] !== "1"){
+    return false;
+  }
+  return validNum.length === phoneArr.length;
+}
+
+console.log(telephoneCheck("0 (757) 622-7382"));
+
+// ****************************************//
+// Cash Register
+// There is shorter way: Check FreeCodeCamp site.
+function checkCashRegister(price, cash, cid) {
+  let cost = price;
+  let givinCash = cash;
+  let allCash = 0;
+  for(let i = 0; i < cid.length; i++){
+    allCash += cid[i][1];
+  }
+  allCash = allCash.toFixed(2);
+  console.log(allCash);
+  let fund = givinCash - cost;
+  // First Condition: 
+  if(fund > allCash){
+    return {
+      status: "INSUFFICIENT_FUNDS",
+      change: []
+    }
+  }
+  let standard = [["PENNY", 0.01], ["NICKEL", 0.05], ["DIME", 0.1], ["QUARTER", 0.25], ["ONE", 1], ["FIVE", 5], ["TEN", 10], ["TWENTY", 20], ["ONE HUNDRED", 100]];
+
+  fund = fund.toFixed(2);
+  console.log(fund);
+  if(fund === allCash){
+    return {
+      status: "CLOSED",
+      change: cid
+    }
+  }
+let change = [];
+  for(let x = 8; x >= 0; x--){
+    if(fund > standard[x][1]){
+      if(fund >= cid[x][1]){
+        change.push([cid[x][0],cid[x][1]]);
+        fund = (fund - cid[x][1]).toFixed(2);
+      }else if(fund < cid[x][1]){
+        let available = (fund - (fund % standard[x][1])).toFixed(2);
+        fund = (fund % standard[x][1]).toFixed(2)
+        console.log(fund);
+        change.push([cid[x][0], parseFloat(available)]);
+      }
+    }
+  }
+
+  let finalCheck = 0;
+  for(let j = 0; j < change.length; j++){
+    finalCheck += change[j][1];
+  }
+  finalCheck = finalCheck.toFixed(2);
+  fund = givinCash - cost;
+  if(finalCheck != fund){
+    return {
+      status: "INSUFFICIENT_FUNDS",
+      change: []
+    }
+  }
+  return {
+    status: "OPEN",
+    change: change
+  }
+
+}
+console.log(checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]));
