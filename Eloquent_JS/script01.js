@@ -119,3 +119,42 @@ function farmInventory(cows, chicken, pigs){
 }
 
 farmInventory(7,16,3);
+
+// Chapter 3 Exercises Page 56
+// Minimum
+function minValue(val1,val2){
+  if(val1 < val2){
+    return val1;
+  }
+  return val2;
+}
+console.log(minValue(13,8));
+
+// Recursion
+function isEven(num){
+  if(num == 0){
+    return true;
+  }else if(num == 1 || num < 0){
+    return false;
+  }else{
+    return isEven(num - 2);
+  }
+}
+console.log(isEven(6));
+
+// Bean Counting
+function countBs(str){
+  return `There is ${countChar(str, "B")} in ${str}`;
+}
+console.log(countBs("BeanBnnb"));
+
+function countChar(str, char){
+  let count = 0;
+  for(let i = 0; i < str.length; i++){
+    if(str[i] === char){
+      count += 1;
+    }
+  }
+  return count;
+}
+console.log(countChar("AhmadSAleh", "A"));
