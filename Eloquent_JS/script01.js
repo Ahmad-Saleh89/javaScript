@@ -62,3 +62,60 @@ function makeChess(height, width){
   }
 }
 makeChess(8,8);
+
+// Chapter 3
+// var vs let
+if(true){
+  let xxx = "Only visible here";
+  var vvv = "Visible every where";
+  console.log(xxx + " "+ vvv);
+}
+console.log(vvv);
+// console.log(xxx); will through an error
+
+// Optional Arguments: Review page 47
+function minus(a, b){
+  if(b === undefined){
+    return -a;
+  }
+  return a - b;
+}
+console.log(minus(5));
+console.log(minus(8,3));
+console.log(minus(2,9));
+
+// Closure
+function multiplier(factor){
+  return number => number * factor;
+}
+let twice = multiplier(2);
+console.log(twice(4));
+let triple = multiplier(3);
+console.log(triple(4));
+
+// Recursion
+function power(base, exponent){
+  if(exponent == 0){
+    return 1;
+  }else{
+    return base * power(base, exponent - 1);
+  }
+}
+console.log(power(2,4));
+
+// Growing Functions
+/* Generate 3 digits starting with 0 */
+function zeroPad(number, width){
+  let num = String(number);
+  while(num.length < width){
+    num = "0" + num;
+  }
+  return num;
+}
+function farmInventory(cows, chicken, pigs){
+  console.log(`${zeroPad(cows, 3)} Cows`);
+  console.log(`${zeroPad(chicken, 3)} Chicken`);
+  console.log(`${zeroPad(pigs, 3)} Pigs`);
+}
+
+farmInventory(7,16,3);
