@@ -158,3 +158,123 @@ function countChar(str, char){
   return count;
 }
 console.log(countChar("AhmadSAleh", "A"));
+
+// Chapter 4
+// padStart()
+const someNum = '5';
+console.log(someNum.padStart(3,0));
+// Practical Example:
+const fullNum = '2034399002125581';
+const last4digits = fullNum.slice(-4);
+console.log(last4digits);
+const maskedNum = last4digits.padStart(fullNum.length, "*");
+console.log(maskedNum);
+
+// repeat()
+console.log("LA ".repeat(3));
+
+// Interesting way to access Object's property
+let person = {
+  name: "Ahmad",
+  age: 29,
+  job: "Web Developer"
+};
+let {job} = person;
+console.log(job); // -> Web Developer
+
+// Chapter 4 Excercises PAGE 78
+// The sum of a range
+function range(start, end, increment = 1){
+  let rangeArr = [];
+  for(let i = start; i <= end; i+= increment){
+    rangeArr.push(i);
+  }
+  return rangeArr;
+}
+console.log(range(2,8,2));
+
+function sum(arr){
+  let total = 0;
+  for(let i of arr){
+    total += i;
+  }
+  return total;
+}
+console.log(sum(range(1,10)));
+
+// Reversing an Array
+/* This function reverses an array without changing the original */
+function reverseArray(arr){
+  let reversed = [];
+  for(let i = arr.length-1 ; i >= 0; i--){
+    reversed.push(arr[i]);
+  }
+  return reversed;
+}
+console.log(reverseArray(["A", "B", "C"]));
+
+/* This function reverses an array and changes the original */
+let arrayValue = [1, 2, 3, 4, 5];
+function reverseItself(arr){
+  let reversed = reverseArray(arr);
+  for(let i = 0; i < arr.length; i++){
+    arr[i] = reversed[i];
+  }
+  return arr;
+}
+reverseItself(arrayValue);
+console.log(arrayValue);
+
+// Array to List or "Object", Page 79
+function arrayToList(arr){
+  function createList(arr, i){
+    if(i == arr.length -1){
+      return {
+        value: arr[i],
+        rest: null
+      }
+    }else{
+      return {
+        value: arr[i],
+        rest: createList(arr, i+1)
+      }
+    }
+  }
+ return createList(arr, 0);
+}
+let myList = arrayToList([10,20,30]);
+console.log(myList);
+
+// List to Array
+function listToArray(obj){
+  let myArr = [];
+  let objKeys = Object.keys(obj);
+  function pushIt(myObj){
+    if(myObj[objKeys[1]] === null){
+      myArr.push(myObj[objKeys[0]]);
+    }else{
+      myArr.push(myObj[objKeys[0]]);
+      pushIt(myObj[objKeys[1]]);
+    }
+  }
+  pushIt(obj);
+  return myArr;
+}
+console.log(listToArray(myList));
+
+// Prepend to a List
+function prepend(elem, obj){
+  return {
+    value: elem,
+    rest: obj
+  }
+}
+let prepended = prepend(5, myList);
+console.log(prepended);
+console.log(listToArray(prepended));
+
+// nth function
+function nth(list, val){
+  return listToArray(list)[val];
+}
+console.log(nth(myList, 1));
