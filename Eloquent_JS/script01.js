@@ -278,3 +278,48 @@ function nth(list, val){
   return listToArray(list)[val];
 }
 console.log(nth(myList, 1));
+
+// Objects Comparison
+let obj01 = {
+  here: {
+    is: "an"
+  },
+  object: 2
+};
+
+let obj02 = {
+  object: 2,
+  here: {
+    is: "an"
+  }
+};
+/* Although they look alike but they are not same */
+console.log(obj01 == obj02); // returns false
+/* So, I will create a function that compares 2 objects and return
+true if they look alike */
+function compareObjs(obj1, obj2){
+  // first compare length
+  let obj1Keys = Object.keys(obj1).sort();
+  let obj2Keys = Object.keys(obj2).sort();
+  if(obj1Keys.length != obj2Keys.length){
+    return false;
+  }
+  // Second compare properties
+  for(let prop in obj1Keys){
+    if(obj1Keys[prop] !== obj2Keys[prop]){
+      return false;
+    }
+  }
+  // Third: Compare values of properties
+  function compValOfProp(object1, object2 , i){
+    // if(i = 0 && object1[obj1Keys[0]] === object2[obj2Keys[0]]){
+    //   return true;
+    // }else if(object1[obj1Keys[i]] === object2[obj2Keys[i]]){
+    //    compValOfProp(object1, object2 , i-1);
+    // }
+    // return false;
+    // Use typeof
+  }
+  return compValOfProp(obj1, obj2, obj1Keys.length-1);
+}
+console.log(compareObjs(obj01, obj02));
