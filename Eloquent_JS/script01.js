@@ -279,47 +279,80 @@ function nth(list, val){
 }
 console.log(nth(myList, 1));
 
+// Another way:
+// Array to List
+function arrToList(arr){
+  let list = null;
+  for(let i = arr.length -1; i >= 0; i--){
+    list = {
+      value: arr[i], // First loop will produce value: 30
+      rest: list // First loop will produce rest: null
+    };
+  }
+  return list;
+}
+console.log(arrToList([10,20,30]));
+
+// List to Array @@@@@@@ VERY IMPORTANT @@@@@@@@
+function listToArr(list){
+  let arr = [];
+  for(let node = list; node; node = node.rest){
+    arr.push(node.value);
+  }
+  return arr;
+}
+console.log(listToArr(myList));
+
+
+
 // Objects Comparison
 let obj01 = {
   here: {
-    is: "an"
+    is: "an",
+    hi: {
+      name: "Ahmad"
+    }
   },
-  object: 2
+  object: null
 };
 
 let obj02 = {
-  object: 2,
+  object: null,
   here: {
-    is: "an"
+    is: "an",
+    hi: {
+      name: "Ahmad"
+    }
   }
 };
 /* Although they look alike but they are not same */
 console.log(obj01 == obj02); // returns false
 /* So, I will create a function that compares 2 objects and return
 true if they look alike */
-function compareObjs(obj1, obj2){
-  // first compare length
-  let obj1Keys = Object.keys(obj1).sort();
-  let obj2Keys = Object.keys(obj2).sort();
-  if(obj1Keys.length != obj2Keys.length){
-    return false;
-  }
-  // Second compare properties
-  for(let prop in obj1Keys){
-    if(obj1Keys[prop] !== obj2Keys[prop]){
+
+function deepEqual(a, b) {
+  console.log(a);
+  console.log(b);
+  if (a === b) return true;
+
+  if (a == null || typeof a != "object" ||
+      b == null || typeof b != "object"){
+        console.log(a);
+        console.log(b);
+        return false;
+      } 
+
+  let keysA = Object.keys(a), keysB = Object.keys(b);
+
+  if (keysA.length != keysB.length) return false;
+
+  for (let key of keysA) {
+    console.log(key);
+    if (!keysB.includes(key) || !deepEqual(a[key], b[key])){
       return false;
-    }
+    } 
   }
-  // Third: Compare values of properties
-  function compValOfProp(object1, object2 , i){
-    // if(i = 0 && object1[obj1Keys[0]] === object2[obj2Keys[0]]){
-    //   return true;
-    // }else if(object1[obj1Keys[i]] === object2[obj2Keys[i]]){
-    //    compValOfProp(object1, object2 , i-1);
-    // }
-    // return false;
-    // Use typeof
-  }
-  return compValOfProp(obj1, obj2, obj1Keys.length-1);
+
+  return true;
 }
-console.log(compareObjs(obj01, obj02));
+console.log(deepEqual(obj01, obj02));
