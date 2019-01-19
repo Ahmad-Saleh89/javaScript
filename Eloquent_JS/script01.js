@@ -356,3 +356,41 @@ function deepEqual(a, b) {
   return true;
 }
 console.log(deepEqual(obj01, obj02));
+
+// Chapter 5:
+// Higher Order Functions
+function greaterThan(n){
+  return m => m > n;
+}
+// function greaterThan(n){
+//   return function(m){
+//     return m > n;
+//   }
+// }
+let greaterThan10 = greaterThan(10);
+console.log(greaterThan10(15)); // -> true
+
+/* This function converts the arguments into an array, then it passes that array to fn as an argument to do something with it.
+NOTE that fn has to be a function that accepts an array as an argument */
+function noisy(fn){
+  return function(...args){
+    let result = fn(...args);
+    return result;
+  };
+}
+console.log(noisy(Math.min)(3,2,1));
+
+// Chapter 5 Excercises
+// Flattening
+let myArray = [[1, 2, 3], [4, 5], [6]];
+function flatten(arr){
+  return arr.join(",").split(",").map(x => parseInt(x));
+}
+console.log(flatten(myArray));
+
+// OR:
+function flattening(arr){
+  return arr.reduce((a,b) => a.concat(b));
+}
+console.log(flattening(myArray));
+
