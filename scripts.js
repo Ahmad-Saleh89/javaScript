@@ -232,40 +232,75 @@ function interview(job){
 interview('teacher')('John');
 interview('designer')('Ahmad');
 
+// call, apply, bind
+let brittany = {
+  name: "Brittany",
+  age: 29,
+  job: "Web Developer",
+  presentation: function(style, timeOfDay){
+    if(style == "formal"){
+      console.log(`Good ${timeOfDay} ladies and gentlemen! I'm ${this.name}, ${this.age} years old and I'm a ${this.job}. `);
+    }else if(style == "casual"){
+      console.log(`Hi guys, I'm ${this.name}, ${this.age} years old and I'm a ${this.job}. Have a nice ${timeOfDay}!`)
+    }else{
+      console.log("Hello every one!");
+    }
+  }
+};
+brittany.presentation("casual", "morning");
+
+var emily = {
+  name: "Emily",
+  age: 34,
+  job: "teacher"
+};
+/* We can call the presentation method of brittany and use it for emily */
+brittany.presentation.call(emily, "formal", "night");
+// You can also use apply but it only accepts an array as an argument
+brittany.presentation.apply(emily, ["casual", "night"]);
+
+// the BIND method : bind returns a function
+/* Let's say that Emily most of the time speaks casually */
+var emilyCasual = brittany.presentation.bind(emily, "casual");
+// So now we can only pass the time of the day
+emilyCasual("morning");
+emilyCasual("afternoon");
+
+
 // Quiz question test
-(function(){ // <--- IIFE
+// (function(){ // <--- IIFE
   
-function Quiz(question, answers, correct){
-  this.question = question;
-  this.answers = answers;
-  this.correct = correct;
-}
-Quiz.prototype.displayQuestion = function(){
-  console.log(this.question);
-  for(var i = 0; i<this.answers.length; i++){
-    console.log(i + ': ' + this.answers[i]);
-  }
-}
+// function Quiz(question, answers, correct){
+//   this.question = question;
+//   this.answers = answers;
+//   this.correct = correct;
+// }
+// Quiz.prototype.displayQuestion = function(){
+//   console.log(this.question);
+//   for(var i = 0; i<this.answers.length; i++){
+//     console.log(i + ': ' + this.answers[i]);
+//   }
+// }
 
-Quiz.prototype.checkAnswer = function(answer){
-  if(answer === this.correct){
-    console.log('Correct Answer');
-  }else{
-    console.log('Wrong Answer');
-  }
-}
+// Quiz.prototype.checkAnswer = function(answer){
+//   if(answer === this.correct){
+//     console.log('Correct Answer');
+//   }else{
+//     console.log('Wrong Answer');
+//   }
+// }
 
-var q1 = new Quiz('Is javascript the coolest programming language in the world?', ['Yes', 'No'], 0);
+// var q1 = new Quiz('Is javascript the coolest programming language in the world?', ['Yes', 'No'], 0);
 
-var q2 = new Quiz('What is the name of this course\'s teacher?', ['Ahmad','Jonas','Maher'], 1);
+// var q2 = new Quiz('What is the name of this course\'s teacher?', ['Ahmad','Jonas','Maher'], 1);
 
-var q3 = new Quiz('What does best describe codig?', ['Boring', 'difficult', 'fun'], 2);
+// var q3 = new Quiz('What does best describe codig?', ['Boring', 'difficult', 'fun'], 2);
 
-var questions = [q1, q2, q3];
-var n = Math.floor(Math.random() * questions.length);
+// var questions = [q1, q2, q3];
+// var n = Math.floor(Math.random() * questions.length);
 
-questions[n].displayQuestion();
+// questions[n].displayQuestion();
 
-var answer = parseInt(prompt('Please select the correct answer.'));
-questions[n].checkAnswer(answer);
-})();
+// var answer = parseInt(prompt('Please select the correct answer.'));
+// questions[n].checkAnswer(answer);
+// })();
