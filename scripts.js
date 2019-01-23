@@ -111,7 +111,7 @@ var maher = Object.create(personProto,
   
 // (callback functions)
   function calcAge(val){
-    return 2018 - val;
+    return 2019 - val;
   }
   var ages = arrayCalc(years, calcAge);
   console.log(ages);
@@ -260,47 +260,94 @@ brittany.presentation.call(emily, "formal", "night");
 brittany.presentation.apply(emily, ["casual", "night"]);
 
 // the BIND method : bind returns a function
+/* Bind doesn't call a function immediately, however it just binds it to be used later - That's why we need to store in a variable */
+// Bind also allows us to preset some parameters
 /* Let's say that Emily most of the time speaks casually */
 var emilyCasual = brittany.presentation.bind(emily, "casual");
 // So now we can only pass the time of the day
 emilyCasual("morning");
 emilyCasual("afternoon");
 
+// Back to years arrays in line 100 and isAdult function in line 119
+/* The adult age varies from country to country */
+// I will create a new function adultAge
+function adultAge(adult, age){
+  return age >= adult;
+}
+/* Now if we were to use the arrayCalc function, we will have a problem because the second parameter "func" only accepts one argument.
+Therefore: We can preset a parameter of adultAge using bind */
+/* Let's say you have to be 20 years old in Japan */
+// I'm going to use ages array in line 116
+console.log(ages);
+var adultJap = arrayCalc(ages, adultAge.bind(this, 20));
+console.log(adultJap);
 
-// Quiz question test
-// (function(){ // <--- IIFE
+
+// Challenge
+(function(){ // --> IFFE
+  function Question(question, answers, correct){
+    this.question = question;
+    this.answers = answers;
+    this.correct = correct;
+  }
   
-// function Quiz(question, answers, correct){
-//   this.question = question;
-//   this.answers = answers;
-//   this.correct = correct;
-// }
-// Quiz.prototype.displayQuestion = function(){
-//   console.log(this.question);
-//   for(var i = 0; i<this.answers.length; i++){
-//     console.log(i + ': ' + this.answers[i]);
-//   }
-// }
+  Question.prototype.askQuestion = function(){
+    console.log(this.question);
+    for(let i = 0; i < this.answers.length; i++){
+      console.log(i + ': ' + this.answers[i]);
+    }
+  }
+  
+  Question.prototype.checkAnswer = function(ansr, callback){
+    let sc; // score
+    if(ansr == this.correct){
+      console.log("Correct Answer!");
+      sc = callback(true);
+    }else{
+      console.log("Wrong Answer!");
+      sc = callback(false);
+    }
+    // this.displayScore(sc);
+    console.log("your score is: " + sc);
+  }
+  
+  // Question.prototype.displayScore = function(score){
+  //   console.log("Your current score is: " + score);
+  //   console.log("-------------------------");
+  // }
+  
+  let q1 = new Question("How many computers do I have?", [2, 4, 5], 0);
+  let q2 = new Question("What is this language", ["Java", "C++", "JavaScript"], 2);
+  let q3 = new Question("My car is:", ["Nisan", "Honda", "Volvo", "Jeep"], 1);
+  
+  let questions = [q1,q2,q3];
+  
+  function score(){ // Closure
+    var scr = 0;
+    return function(correct){
+      if(correct){
+        scr++;
+      }
+      return scr;
+    }
+  }
 
-// Quiz.prototype.checkAnswer = function(answer){
-//   if(answer === this.correct){
-//     console.log('Correct Answer');
-//   }else{
-//     console.log('Wrong Answer');
-//   }
-// }
+  var storeScore = score();
+  // console.dir(storeScore);
 
-// var q1 = new Quiz('Is javascript the coolest programming language in the world?', ['Yes', 'No'], 0);
+  function nextQuestion(){
+    var random = Math.floor(Math.random() * questions.length);
+  
+    questions[random].askQuestion();
+    let answer = prompt("Please select the correct answer");
+  
+    if(answer !== "Exit"){
+      questions[random].checkAnswer(parseInt(answer), storeScore);
+      nextQuestion();
+    }
+  
+  }
+  nextQuestion();
+})();
 
-// var q2 = new Quiz('What is the name of this course\'s teacher?', ['Ahmad','Jonas','Maher'], 1);
 
-// var q3 = new Quiz('What does best describe codig?', ['Boring', 'difficult', 'fun'], 2);
-
-// var questions = [q1, q2, q3];
-// var n = Math.floor(Math.random() * questions.length);
-
-// questions[n].displayQuestion();
-
-// var answer = parseInt(prompt('Please select the correct answer.'));
-// questions[n].checkAnswer(answer);
-// })();
