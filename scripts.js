@@ -324,17 +324,18 @@ console.log(adultJap);
   
   function score(){ // Closure
     var scr = 0;
-    return function(correct){
+    var update = function(correct){
       if(correct){
         scr++;
       }
       return scr;
     }
+    return update;
   }
 
   var storeScore = score();
   // console.dir(storeScore);
-
+  console.log(storeScore(true));
   function nextQuestion(){
     var random = Math.floor(Math.random() * questions.length);
   
