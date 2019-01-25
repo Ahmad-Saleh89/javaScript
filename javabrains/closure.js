@@ -48,3 +48,63 @@ In other words, it will start over */
 var updateScore = score();
 console.log(updateScore(true));
 console.log(updateScore(true));
+
+// Closures in callbacks
+var x = 15;
+
+var fn = function(){
+  console.log(x);
+}
+// Wait for 3 seconds
+setTimeout(fn, 3000);
+
+/* ******* The Module Pattern  ****** */
+// First consider this object
+var person1 = {
+  "firstName": "John", // Public
+  "lastName": "Smith", // Public
+  "getFirstName": function(){
+    return this.firstName;
+  },
+  "getLastName": function(){
+    return this.lastName;
+  }
+};
+console.log(person1.firstName); // will print John
+console.log(person1.getFirstName()); // will print John as well
+/* Note that the prop firstName is accessible directly from outside the person1 scope so if you do: person1.firstName you will get John.
+- So what if you want to make those properties private?
+Here where closures come handy */
+
+// Now consider this
+function newStudent(){
+  let school = "UNL"; // Private
+  let major = "Computer Science"; // Private
+
+
+  var student = {
+    "getSchool": function(){
+      return school;
+    },
+    "getMajor": function(){
+      return major;
+    },
+    "setSchool": function(x){
+      school = x;
+    },
+    "setMajor": function(x){
+      major = x;
+    }
+  };
+  return student;
+}
+
+let ahmad = newStudent();
+console.log(ahmad.getSchool());
+// console.log(ahmad.school); This will print undefined
+ahmad.setSchool("UNO");
+console.log(ahmad.getSchool()); // prints UNO
+
+let jane = newStudent();
+console.log(jane.getSchool()); // will print UNL not UNO
+
