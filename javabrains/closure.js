@@ -81,7 +81,6 @@ function newStudent(){
   let school = "UNL"; // Private
   let major = "Computer Science"; // Private
 
-
   var student = {
     "getSchool": function(){
       return school;
