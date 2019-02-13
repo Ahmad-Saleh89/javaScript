@@ -162,10 +162,11 @@ var UIController = (function(){
     expensesLabel: '.budget__expenses--value',
     percentageLabel: '.budget__expenses--percentage',
     container: '.container',
-    expPercentage: '.item__percentage'
+    expPercentage: '.item__percentage',
+    dateLabel: '.budget_title_date'
   };
 
-      /* + for income & - for expense
+    /* + for income & - for expense
     * Generating 2 decimal fields
     * Comma separating the thousands */
    var formatNumber =  function(num, type){
@@ -181,6 +182,15 @@ var UIController = (function(){
     decimal = numSplit[1];
 
     return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + decimal;
+  };
+
+  /* In case of a NodeList, we can't use forEach method directly */
+  // Therefore, let's create our own NodeList forEach method: nlForEach
+  // Also let's use the callback concept as well
+  var nlForEach = function(nodeList, callback){
+    for(var i = 0; i < nodeList.length; i++){
+      callback(nodeList[i], i);
+    }
   };
 
   return {   //Public     // Basically we're returning an object with some methods
@@ -253,15 +263,6 @@ var UIController = (function(){
      */
     displayPercentages: function(percentages){
       var fields = document.querySelectorAll(DOMstrings.expPercentage); // returns NodeList
-      console.log(fields);
-      /* Since fields will be a NodeList, we can't use forEach method directly */
-      // Therefore, let's create our own NodeList forEach method: nlForEach
-      // Also let's use the callback concept as well
-      var nlForEach = function(nodeList, callback){
-        for(var i = 0; i < nodeList.length; i++){
-          callback(nodeList[i], i);
-        }
-      };
 
       nlForEach(fields, function(current, index){
         if(percentages[index] > 0){
@@ -270,6 +271,24 @@ var UIController = (function(){
           current.textContent = '--';
         }
       });
+    },
+
+    displayDate: function(){
+      var now, year, months, month;
+      now = new Date();
+      months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      month = now.getMonth();
+      year = now.getFullYear();
+      document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year;
+    },
+
+    changeType: function(){
+      var fields = document.querySelectorAll(DOMstrings.inputType + ',' + DOMstrings.inputDescription + ',' + DOMstrings.inputValue);  // returns nodeList
+
+      nlForEach(fields, function(current){
+        current.classList.toggle('red-focus');
+      });
+      document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
     },
 
     getDOMstrings: function(){
@@ -294,6 +313,8 @@ var controller = (function(budgetCtrl, UICtrl){
       }
     });
     document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+
+    document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changeType);
   };
 
   var updateBudget = function(){     // Private
@@ -359,6 +380,7 @@ var controller = (function(budgetCtrl, UICtrl){
   return {                // Public
     init: function(){
       console.log("Welcome to Budgety Application");
+      UICtrl.displayDate();
       setupEventListeners();
     }
   }
