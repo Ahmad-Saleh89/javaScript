@@ -165,6 +165,24 @@ var UIController = (function(){
     expPercentage: '.item__percentage'
   };
 
+      /* + for income & - for expense
+    * Generating 2 decimal fields
+    * Comma separating the thousands */
+   var formatNumber =  function(num, type){
+    var numSplit, int, decimal;
+    num = Math.abs(num);
+    num = num.toFixed(2); // returns string with 2 decimals after rounding it
+
+    numSplit = num.split('.');
+    int = numSplit[0];
+    if(int.length > 3){ // add a comma if bigger than 999
+      int = int.substr(0, int.length - 3) + ',' + int.substr(int.length -3, 3);
+    }
+    decimal = numSplit[1];
+
+    return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + decimal;
+  };
+
   return {   //Public     // Basically we're returning an object with some methods
     getInput: function(){ 
       return {            // this is also an object
@@ -180,10 +198,10 @@ var UIController = (function(){
       if(type === 'inc'){
         // container is the "income__list" NOT the big container
         container = DOMstrings.incomeContainer;
-        html = `<div class="item clearfix" id="inc-${obj.id}"><div class="item__description">${obj.description}</div><div class="right clearfix"><div class="item__value">${obj.value}</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>`;
+        html = `<div class="item clearfix" id="inc-${obj.id}"><div class="item__description">${obj.description}</div><div class="right clearfix"><div class="item__value">${formatNumber(obj.value, type)}</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>`;
       }else if(type === 'exp'){
         container = DOMstrings.expensesContainer;
-        html = `<div class="item clearfix" id="exp-${obj.id}"><div class="item__description">${obj.description}</div><div class="right clearfix"><div class="item__value">${obj.value}</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>`
+        html = `<div class="item clearfix" id="exp-${obj.id}"><div class="item__description">${obj.description}</div><div class="right clearfix"><div class="item__value">${formatNumber(obj.value, type)}</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>`
       }
       // Insert the HTML into the right column in the DOM 
       document.querySelector(container).insertAdjacentHTML('beforeend', html);
@@ -215,12 +233,13 @@ var UIController = (function(){
     },
 
     displayBudget: function(obj){
-      document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
-      document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
-      document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
+      var type = obj.budget > 0 ? 'inc' : 'exp';
+      document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(obj.budget, type);
+      document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(obj.totalInc, 'inc');
+      document.querySelector(DOMstrings.expensesLabel).textContent = formatNumber(obj.totalExp, 'exp');
 
       if(obj.percentage > 0){
-        document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage + '%'
+        document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage + '%';
       }else if(obj.percentage == 0){
         document.querySelector(DOMstrings.percentageLabel).textContent = ': )';
       }else{
